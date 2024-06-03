@@ -31,13 +31,31 @@ data_new = []
 for item in data['items']:
     area_name = item['area']['name']
     salary_from = item['salary']['from'] if item['salary'] is not None and 'from' in item['salary'] else None
+    employer_name = item['employer']['name']
+    snippet_requirement = item['snippet']['requirement']
+    snippet_responsibility = item['snippet']['responsibility']    
+    professional_roles_name = item['professional_roles'][0]['name']
+    experience_name = item['experience']['name']
+    employment_name = item['employment']['name']
     item_copy = item.copy()
     item_copy['area'] = area_name
     item_copy['salary'] = salary_from
+    item_copy['employer'] = employer_name
+    item_copy['requirement'] = snippet_requirement
+    item_copy['responsibility'] = snippet_responsibility
+    item_copy['professional_roles'] = professional_roles_name
+    item_copy['experience'] = experience_name
+    item_copy['employment'] = employment_name
     data_new.append(item_copy)
 
-# vacancies_df = pd.DataFrame(data['items'], columns=['id', 'name', 'area'])
-vacancies_df = pd.DataFrame(data_new)
+vacancies_df = pd.DataFrame(data_new, columns=['id', 
+   'name', 'area', 'salary', 'created_at', 'alternate_url', 'employer', 'requirement', 
+   'professional_roles', 'experience', 'employment', 'responsibility'])
+
+# Изменим порядок столбцов
+vacancies_df = vacancies_df[['id', 
+   'name', 'area', 'salary', 'created_at', 'alternate_url', 'employer',  
+   'professional_roles', 'experience', 'employment', 'requirement', 'responsibility']]
 
 
 # Сохраняем DataFrame в файл
