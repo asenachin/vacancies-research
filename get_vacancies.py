@@ -1,18 +1,20 @@
 import pandas as pd
 import requests
+import sqlite3
+
 
 # Токен доступа
 token = 'YOUR_ACCESS_TOKEN'
 
 # Параметры запроса
 params = {
-    'text': 'Аналитик',  # Желаемая позиция
+    'text': 'Аналитик данных',  # Желаемая позиция
     'area': 1217,  # Код региона (например, Барнаул)
     'per_page': 100  # Количество результатов на странице
 }
 
 # Отправляем GET-запрос
-response = requests.get('https://api.hh.ru/vacancies', params=params, ) # headers={'Authorization': 'Bearer ' + token}
+response = requests.get('https://api.hh.ru/vacancies', params=params) # ,headers={'Authorization': 'Bearer ' + token}
 
 # Проверка успешности запроса
 if response.status_code == 200:
@@ -63,3 +65,27 @@ vacancies_df.to_csv('vacancies_df.csv', index=False)
 
 # Выводим первые 5 строк DataFrame для проверки
 print(vacancies_df.head())
+
+
+# ~ # Устанавливаем соединение с базой данных
+# ~ conn = sqlite3.connect('vacancies_reaserch.db')
+
+# ~ # Создаём объект курсора
+# ~ cursor = conn.cursor()
+
+# ~ # Выполнение SQL-запроса
+# ~ query_create = '''CREATE TABLE IF NOT EXISTS  vacancies (
+                      # ~ id INTEGER PRIMARY KEY, 
+                      # ~ name TEXT, age INTEGER)
+               # ~ '''
+
+# ~ cursor.execute(query_create)
+
+# ~ # Вставка данных в таблицу
+# ~ cursor.execute("INSERT INTO users (name, age) VALUES ('Alice', 30)")
+
+# ~ # Сохранение изменений
+# ~ conn.commit()
+
+# ~ # Закрытие соединения
+# ~ conn.close()

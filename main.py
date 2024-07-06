@@ -1,7 +1,6 @@
 from vacancies.ui.main_window import MainWindow
 
 
-# Точка входа в программу
 def main():
     main_window = MainWindow()
     main_window.start_mainloop()
