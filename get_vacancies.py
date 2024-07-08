@@ -78,7 +78,9 @@ print(vacancies_df.head())
 engine = create_engine('sqlite:///vacancies.db')
 
 # Запишем датафрейм в базу данных
-dtype = {'created_at': 'datetime'}
-vacancies_df.to_sql('new_vacancies', engine, index=False, if_exists='replace', dtype=dtype)
+# dtype = {'created_at': 'datetime'}
+vacancies_df.to_sql('new_vacancies', engine, index=False, if_exists='replace') # , dtype=dtype
 
+# Закрываем соединение
+engine.dispose()
 
