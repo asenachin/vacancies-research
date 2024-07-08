@@ -1,10 +1,10 @@
 import pandas as pd
 import requests
-import sqlite3
+from sqlalchemy import create_engine
 
 
 # Токен доступа
-token = 'YOUR_ACCESS_TOKEN'
+# token = 'YOUR_ACCESS_TOKEN'
 
 # Параметры запроса
 params = {
@@ -58,6 +58,14 @@ vacancies_df = pd.DataFrame(data_new, columns=['id',
 vacancies_df = vacancies_df[['id', 
    'name', 'area', 'salary', 'created_at', 'alternate_url', 'employer',  
    'professional_roles', 'experience', 'employment', 'requirement', 'responsibility']]
+   
+# Изменим тип данных столбца id
+vacancies_df['id'] = vacancies_df['id'].astype(int)
+
+# Преобразование столбца 'timestamp' в тип данных datetime
+vacancies_df['created_at'] = pd.to_datetime(
+    vacancies_df['created_at'],  format='%Y-%m-%dT%H:%M:%S%z' # format='ISO8601'
+)
 
 
 # Сохраняем DataFrame в файл
@@ -66,26 +74,11 @@ vacancies_df.to_csv('vacancies_df.csv', index=False)
 # Выводим первые 5 строк DataFrame для проверки
 print(vacancies_df.head())
 
+# Подключимся к базе данных SQLite
+engine = create_engine('sqlite:///vacancies.db')
 
-# ~ # Устанавливаем соединение с базой данных
-# ~ conn = sqlite3.connect('vacancies_reaserch.db')
+# Запишем датафрейм в базу данных
+dtype = {'created_at': 'datetime'}
+vacancies_df.to_sql('new_vacancies', engine, index=False, if_exists='replace', dtype=dtype)
 
-# ~ # Создаём объект курсора
-# ~ cursor = conn.cursor()
 
-# ~ # Выполнение SQL-запроса
-# ~ query_create = '''CREATE TABLE IF NOT EXISTS  vacancies (
-                      # ~ id INTEGER PRIMARY KEY, 
-                      # ~ name TEXT, age INTEGER)
-               # ~ '''
-
-# ~ cursor.execute(query_create)
-
-# ~ # Вставка данных в таблицу
-# ~ cursor.execute("INSERT INTO users (name, age) VALUES ('Alice', 30)")
-
-# ~ # Сохранение изменений
-# ~ conn.commit()
-
-# ~ # Закрытие соединения
-# ~ conn.close()
