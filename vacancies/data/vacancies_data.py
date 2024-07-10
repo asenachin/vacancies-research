@@ -1,12 +1,10 @@
-import sqlite3
-
 from vacancies.db.sqlite_connection import my_connection_handler
 
 
 class VacanciesDataObject:
     def __init__(self, id=0, name='', area='', salary='', created_at='', alternate_url='', employer='',
                  professional_roles='', experience='', employment='', requirement='', responsibility=''):
-        self.value = id
+        self.vacancy_id = id
         self.name = name
         self.area = area
         self.salary = salary
@@ -43,12 +41,11 @@ class VacanciesDataHandler:
                                    row[7], row[8], row[9], row[10], row[11])
 
     @staticmethod
-    def select_by_id(id: int):
+    def select_by_id(vacancy_id: int):
         mydb = my_connection_handler.get_connection()
-        select_query = "SELECT * FROM new_vacancies WHERE id=" + str(id)
+        select_query = "SELECT * FROM new_vacancies WHERE id=" + str(vacancy_id)
         cursor = mydb.cursor()
         cursor.execute(select_query)
         row = cursor.fetchone()
         department = VacanciesDataHandler.get_vacancy(row)
         return department
-

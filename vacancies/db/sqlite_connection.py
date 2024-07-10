@@ -4,7 +4,7 @@ import sqlite3
 
 class ConnectionHandler:
 
-    def __init__(self) -> object:
+    def __init__(self):
         self.read_from_config()
 
     def read_from_config(self):
@@ -39,6 +39,7 @@ class ConnectionHandler:
         except sqlite3.Error as error:
             print("Ошибка при подключении к SQLite", error)
             return False
+
 
 # Singleton
 my_connection_handler = ConnectionHandler()
