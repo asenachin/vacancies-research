@@ -1,7 +1,8 @@
 import pandas as pd
 import requests
 from sqlalchemy import create_engine
-
+import sqlite3
+import os
 
 # Токен доступа
 # token = 'YOUR_ACCESS_TOKEN'
@@ -74,13 +75,57 @@ vacancies_df.to_csv('vacancies_df.csv', index=False)
 # Выводим первые 5 строк DataFrame для проверки
 print(vacancies_df.head())
 
+
+from sqlalchemy import Table, Column, Integer, String, MetaData, Float, DateTime
+
+# Установка соединения с базой данных
+engine = create_engine('sqlite:///vacancies.db', echo=True)
+
+metadata = MetaData()
+
+# Создание объекта таблицы
+new_vacancies = Table('new_vacancies', metadata,
+                  Column('id', Integer, primary_key=True),
+                  Column('name', String),
+                  Column('area', String),
+                  Column('salary', Float),
+                  Column('created_at', DateTime),
+                  Column('alternate_url', String),
+                  Column('employer', String),
+                  Column('professional_roles', String),
+                  Column('experience', String),
+                  Column('employment', String),
+                  Column('requirement', String),
+                  Column('responsibility', String),
+           )
+
+metadata.create_all(engine)  # Создание таблицы в базе данных
+
+# Закрываем соединение
+engine.dispose()
+
+
 # Подключимся к базе данных SQLite
 engine = create_engine('sqlite:///vacancies.db')
 
 # Запишем датафрейм в базу данных
-# dtype = {'created_at': 'datetime'}
-vacancies_df.to_sql('new_vacancies', engine, index=False, if_exists='replace') # , dtype=dtype
+vacancies_df.to_sql('new_vacancies', engine, index=False, if_exists='append')
 
 # Закрываем соединение
 engine.dispose()
+
+
+# Пример создания пути к файлу базы данных
+# ~ current_dir = os.path.dirname(os.path.abspath(__file__))
+# ~ db_path = os.path.join(current_dir, 'vacancies.db')
+
+# ~ try:
+    # ~ mydb = sqlite3.connect(db_path)
+    # ~ query = "SELECT 1"
+    # ~ cursor = mydb.cursor()
+    # ~ cursor.execute(query)
+    # ~ mydb.commit()
+    # ~ mydb.close()
+# ~ except sqlite3.Error as error:
+    # ~ print("Ошибка при подключении к SQLite", error)
 

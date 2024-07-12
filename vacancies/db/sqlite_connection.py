@@ -15,7 +15,7 @@ class ConnectionHandler:
 
     def do_test(self):
         mydb = sqlite3.connect(database=self.database)
-        select_query = "SELECT * FROM new_vacancies ORDER BY name"
+        select_query = "SELECT * FROM new_vacancies"  # ORDER BY name
         cursor = mydb.cursor()
         cursor.execute(select_query)
         result = cursor.fetchall()

@@ -1,6 +1,7 @@
 import tkinter as tk
 from tkinter import ttk
-from vacancies.data.vacancies_data import VacanciesDataHandler
+
+from vacancies.data.vacancies_data import VacancyDataObject, VacancyDataHandler
 
 
 class MainWindow:
@@ -22,6 +23,11 @@ class MainWindow:
         # Добавление кнопки Тест
         btn_test = tk.Button(self.tab1, text='Тест',
                              font=('Arial', 10, 'bold'), bg='#ccffcc', command=self.do_test)
+        btn_test.place(x=1190, y=800, width=120, height=50)
+
+        # Добавление кнопки Вакансии
+        btn_test = tk.Button(self.tab1, text='Вакансии',
+                             font=('Arial', 10, 'bold'), bg='#ccffcc', command=self.do_list_vacancies)
         btn_test.place(x=1320, y=800, width=120, height=50)
 
         # Добавление кнопки закрытия программы
@@ -71,6 +77,26 @@ class MainWindow:
         # for vacancy in vacancies:
         #     print(vacancy.name)
 
+        # self.get_report_text()
+
+        # VacanciesDataHandler.delete_by_id(97034185)
+        # print('Готово!')
+
+        # vacancy_update = VacancyDataHandler.select_by_id(91350026)
+        # print(vacancy_update.vacancy_id, vacancy_update.name)
+        # vacancy_update.name = 'Консультант/аналитик 1С ERP (управление производственными процессами)'
+        # print(vacancy_update.vacancy_id, vacancy_update.name)
+        # VacancyDataHandler.update(vacancy_update)
+        # print('Готово!')
+
+        vacancy_insert = VacancyDataObject(name="Консультант/аналитик 1С ERP")
+        print(vacancy_insert.name)
+        VacancyDataHandler.insert(vacancy_insert)
+        print(vacancy_insert.vacancy_id)
+        print('Готово!')
+
+    # Открытие списка "Отделы"
+    def do_list_vacancies(self):
         self.get_report_text()
 
     def close(self):
@@ -80,7 +106,7 @@ class MainWindow:
         self.window.mainloop()
 
     def get_report_text(self):
-        vacancies = VacanciesDataHandler.select_list()
+        vacancies = VacancyDataHandler.select_list()
         for vacancy in vacancies:
             self.tree.insert("", 'end', text=vacancy.vacancy_id,
                              values=(vacancy.vacancy_id, vacancy.name, vacancy.area, vacancy.salary, vacancy.created_at,
