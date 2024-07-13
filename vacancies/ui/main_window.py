@@ -1,7 +1,7 @@
 import tkinter as tk
 from tkinter import ttk
 
-from vacancies.data.vacancies_data import VacancyDataObject, VacancyDataHandler
+from vacancies.data.vacancies_data import VacancyDataHandler
 
 
 class MainWindow:
@@ -69,33 +69,8 @@ class MainWindow:
         self.tab_control.pack(expand=1, fill="both")
 
     def do_test(self):
+        pass
 
-        # ch = ConnectionHandler()
-        # ch.do_test()
-
-        # vacancies = VacanciesDataHandler.select_list()
-        # for vacancy in vacancies:
-        #     print(vacancy.name)
-
-        # self.get_report_text()
-
-        # VacanciesDataHandler.delete_by_id(97034185)
-        # print('Готово!')
-
-        # vacancy_update = VacancyDataHandler.select_by_id(91350026)
-        # print(vacancy_update.vacancy_id, vacancy_update.name)
-        # vacancy_update.name = 'Консультант/аналитик 1С ERP (управление производственными процессами)'
-        # print(vacancy_update.vacancy_id, vacancy_update.name)
-        # VacancyDataHandler.update(vacancy_update)
-        # print('Готово!')
-
-        vacancy_insert = VacancyDataObject(name="Консультант/аналитик 1С ERP")
-        print(vacancy_insert.name)
-        VacancyDataHandler.insert(vacancy_insert)
-        print(vacancy_insert.vacancy_id)
-        print('Готово!')
-
-    # Открытие списка "Отделы"
     def do_list_vacancies(self):
         self.get_report_text()
 
