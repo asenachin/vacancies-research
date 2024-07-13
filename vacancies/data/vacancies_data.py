@@ -32,14 +32,15 @@ class VacancyDataHandler:
             for row in result:
                 vacancies.append(VacancyDataObject(row[0], row[1], row[2], row[3], row[4], row[5], row[6],
                                                    row[7], row[8], row[9], row[10], row[11]))
+            mydb.close()
             return vacancies
-        except:
-            raise
+        except Exception as e:
+            mb.showerror("Ошибка", str(e))
 
     @staticmethod
     def get_vacancy(row):
         return VacancyDataObject(row[0], row[1], row[2], row[3], row[4], row[5], row[6],
-                                   row[7], row[8], row[9], row[10], row[11])
+                                 row[7], row[8], row[9], row[10], row[11])
 
     @staticmethod
     def select_by_id(vacancy_id: int):
@@ -49,6 +50,7 @@ class VacancyDataHandler:
         cursor.execute(select_query)
         row = cursor.fetchone()
         vacancy = VacancyDataHandler.get_vacancy(row)
+        mydb.close()
         return vacancy
 
     @staticmethod
