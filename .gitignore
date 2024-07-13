@@ -130,3 +130,9 @@ dmypy.json
 
 # PyCharm
 .idea/
+
+# System files
+get_areas.py
+get_vacancies.py
+vacancies.sql
+vacancies_df.csv
